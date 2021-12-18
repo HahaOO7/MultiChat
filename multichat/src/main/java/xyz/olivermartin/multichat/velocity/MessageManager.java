@@ -408,7 +408,7 @@ public class MessageManager {
 
         ConfigurationNode config = ConfigManager.getInstance().getHandler("messages.yml").getConfig();
 
-        if (config.getChildrenMap().containsKey(id)) return config.getString(id);
+        if (config.getChildrenMap().containsKey(id)) return config.getNode(id).getString();
         if (!defaultMessages.containsKey(id))
             return "&cERROR - Please report to plugin developer - No message defined for: " + id;
         return defaultMessages.get(id.toLowerCase());
@@ -435,7 +435,7 @@ public class MessageManager {
         ConfigurationNode config = ConfigManager.getInstance().getHandler("messages.yml").getConfig();
 
         if (config.getChildrenMap().containsKey("prefix")) {
-            prefix = config.getString("prefix");
+            prefix = config.getNode("prefix").getString();
         } else {
             prefix = defaultMessages.get("prefix");
         }

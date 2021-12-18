@@ -347,9 +347,9 @@ public class ChatControl {
 
                     if (config.getNode("anti_spam_spigot").getBoolean()) {
                         ServerInfo server = player.getCurrentServer().get().getServerInfo();
-                        BungeeComm.sendCommandMessage(config.getString("anti_spam_command").replaceAll("%PLAYER%", player.getUsername()), server);
+                        BungeeComm.sendCommandMessage(config.getNode("anti_spam_command").getString().replaceAll("%PLAYER%", player.getUsername()), server);
                     } else {
-                        MultiChat.getInstance().getServer().getCommandManager().executeAsync(MultiChat.getInstance().getServer().getConsoleCommandSource(), config.getString("anti_spam_command").replaceAll("%PLAYER%", player.getUsername()));
+                        MultiChat.getInstance().getServer().getCommandManager().executeAsync(MultiChat.getInstance().getServer().getConsoleCommandSource(), config.getNode("anti_spam_command").getString().replaceAll("%PLAYER%", player.getUsername()));
                     }
 
                 }

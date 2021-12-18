@@ -332,52 +332,40 @@ public class Events {
             }
 
         }
-        //TODO ?}
-        //TODO? }
     }
 
     @Subscribe
     public void onLogin(PostLoginEvent event) {
-
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         boolean firstJoin = false;
 
         if (player.hasPermission("multichat.staff.mod")) {
-
             if (!MultiChat.modchatpreferences.containsKey(uuid)) {
-
                 TChatInfo chatinfo = new TChatInfo();
-                chatinfo.setChatColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("modchat.ccdefault").toCharArray()[0]);
-                chatinfo.setNameColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("modchat.ncdefault").toCharArray()[0]);
+                chatinfo.setChatColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("modchat.ccdefault").getString().toCharArray()[0]);
+                chatinfo.setNameColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("modchat.ncdefault").getString().toCharArray()[0]);
                 MultiChat.modchatpreferences.put(uuid, chatinfo);
-
             }
         }
 
         if (player.hasPermission("multichat.staff.admin")) {
-
             if (!MultiChat.adminchatpreferences.containsKey(uuid)) {
-
                 TChatInfo chatinfo = new TChatInfo();
-                chatinfo.setChatColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("adminchat.ccdefault").toCharArray()[0]);
-                chatinfo.setNameColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("adminchat.ncdefault").toCharArray()[0]);
+                chatinfo.setChatColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("adminchat.ccdefault").getString().toCharArray()[0]);
+                chatinfo.setNameColor(ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("adminchat.ncdefault").getString().toCharArray()[0]);
                 MultiChat.adminchatpreferences.put(uuid, chatinfo);
-
             }
         }
 
         PlayerMetaManager.getInstance().registerPlayer(uuid, event.getPlayer().getUsername());
 
         if (!MultiChat.viewedchats.containsKey(uuid)) {
-
             MultiChat.viewedchats.put(uuid, null);
             ConsoleManager.log("Registered player " + player.getUsername());
-
         }
 
         if (!ChatModeManager.getInstance().existsPlayer(uuid)) {
-
             boolean globalMode;
             globalMode = !MultiChat.defaultChannel.equalsIgnoreCase("local");
             ChatModeManager.getInstance().registerPlayer(uuid, globalMode);
@@ -385,11 +373,9 @@ public class Events {
         }
 
         if (MultiChat.forceChannelOnJoin) {
-
             boolean globalMode;
             globalMode = !MultiChat.defaultChannel.equalsIgnoreCase("local");
             ChatModeManager.getInstance().registerPlayer(uuid, globalMode);
-
         }
 
         // Set player to appropriate channels
@@ -409,10 +395,10 @@ public class Events {
 
         if (ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("showjoin").getBoolean()) {
 
-            String joinformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("serverjoin");
-            String silentformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("silentjoin");
-            String welcomeMessage = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("welcome_message");
-            String privateWelcomeMessage = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("private_welcome_message");
+            String joinformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("serverjoin").getString();
+            String silentformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("silentjoin").getString();
+            String welcomeMessage = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("welcome_message").getString();
+            String privateWelcomeMessage = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("private_welcome_message").getString();
 
             ChatManipulation chatman = new ChatManipulation();
 
@@ -501,8 +487,8 @@ public class Events {
 
         if (ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("showquit").getBoolean()) {
 
-            String joinformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("networkquit");
-            String silentformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getString("silentquit");
+            String joinformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("networkquit").getString();
+            String silentformat = ConfigManager.getInstance().getHandler("joinmessages.yml").getConfig().getNode("silentquit").getString();
 
             ChatManipulation chatman = new ChatManipulation();
 

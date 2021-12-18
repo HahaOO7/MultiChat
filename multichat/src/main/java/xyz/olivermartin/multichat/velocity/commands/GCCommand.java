@@ -108,7 +108,7 @@ public class GCCommand extends Command {
             return;
         }
 
-        String messageFormat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("groupchat.format");
+        String messageFormat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("groupchat.format").getString();
         message = chatfix.replaceGroupChatVars(messageFormat, playerName, message, groupInfo.getName());
 
         for (Player onlineplayer : MultiChat.getInstance().getServer().getAllPlayers()) {

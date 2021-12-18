@@ -41,7 +41,7 @@ public class LocalSpongeConfig extends LocalConfig {
 
 	@Override
 	protected String getString(String configNode, String defaultValue) {
-		return config.getNode(configNode).getString(defaultValue);
+		return config.getNode(configNode).getNode(defaultValue).getString();
 	}
 
 	@Override

@@ -30,9 +30,9 @@ public class PrivateMessageManager {
 
         message = MultiChatUtil.reformatRGB(message);
 
-        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmout");
-        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmin");
-        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmspy");
+        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmout").getString();
+        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmin").getString();
+        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmspy").getString();
 
         String finalmessage = chatfix.replaceMsgVars(messageoutformat, message, sender, target);
         if (MultiChat.legacyServers.contains(sender.getCurrentServer().get().getServerInfo().getName())) {
@@ -84,9 +84,9 @@ public class PrivateMessageManager {
 
         message = MultiChatUtil.reformatRGB(message);
 
-        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmout");
-        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmin");
-        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmspy");
+        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmout").getString();
+        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmin").getString();
+        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmspy").getString();
 
         String finalmessage = chatfix.replaceMsgConsoleTargetVars(messageoutformat, message, sender);
         if (MultiChat.legacyServers.contains(sender.getCurrentServer().get().getServerInfo().getName())) {
@@ -131,9 +131,9 @@ public class PrivateMessageManager {
 
         CommandSource sender = MultiChat.getInstance().getServer().getConsoleCommandSource();
 
-        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmout");
-        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmin");
-        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("pmspy");
+        String messageoutformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmout").getString();
+        String messageinformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmin").getString();
+        String messagespyformat = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("pmspy").getString();
 
         String finalmessage = chatfix.replaceMsgConsoleSenderVars(messageoutformat, message, target);
         sender.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(finalmessage));

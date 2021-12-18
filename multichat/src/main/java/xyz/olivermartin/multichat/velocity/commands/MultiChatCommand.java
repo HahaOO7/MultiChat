@@ -124,7 +124,7 @@ public class MultiChatCommand extends Command {
                     MultiChat.defaultChannel = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("default_channel").getString();
                     MultiChat.forceChannelOnJoin = ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("force_channel_on_join").getBoolean();
 
-                    Channel.getGlobalChannel().setFormat(ConfigManager.getInstance().getHandler("config.yml").getConfig().getString("globalformat"));
+                    Channel.getGlobalChannel().setFormat(ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("globalformat").getString());
                     Channel.getGlobalChannel().clearServers();
 
                     for (String server : ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("no_global").getList(String::valueOf)) {
