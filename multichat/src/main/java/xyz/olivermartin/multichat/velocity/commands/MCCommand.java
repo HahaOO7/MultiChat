@@ -1,0 +1,63 @@
+package xyz.olivermartin.multichat.velocity.commands;
+
+import com.velocitypowered.api.proxy.Player;
+import xyz.olivermartin.multichat.velocity.Events;
+import xyz.olivermartin.multichat.velocity.MessageManager;
+import xyz.olivermartin.multichat.velocity.MultiChatUtil;
+import xyz.olivermartin.multichat.velocity.StaffChatManager;
+
+/**
+ * Mod-Chat Commands
+ * <p>Allows staff members to send mod-chat messages or toggle the chat</p>
+ *
+ * @author Oliver Martin (Revilo410)
+ */
+public class MCCommand extends Command {
+
+    private static String[] aliases = new String[]{};
+
+    public MCCommand() {
+        super("mc", aliases);
+    }
+
+    public void execute(Invocation invocation) {
+        var args = invocation.arguments();
+        var sender = invocation.source();
+        if (!sender.hasPermission("multichat.staff.mod")) {
+            return;
+        }
+
+        boolean toggleresult;
+
+        if (args.length < 1) {
+
+            if ((sender instanceof Player player)) {
+
+                toggleresult = Events.toggleMC(player.getUniqueId());
+
+                if (toggleresult) {
+                    MessageManager.sendMessage(sender, "command_mc_toggle_on");
+                } else {
+                    MessageManager.sendMessage(sender, "command_mc_toggle_off");
+                }
+
+            } else {
+                MessageManager.sendMessage(sender, "command_mc_only_players");
+            }
+
+        } else if ((sender instanceof Player player)) {
+
+            String message = MultiChatUtil.getMessageFromArgs(args);
+
+            StaffChatManager chatman = new StaffChatManager();
+            chatman.sendModMessage(player.getUsername(), player.getUsername(), player.getCurrentServer().get().getServerInfo().getName(), message);
+
+        } else {
+
+            String message = MultiChatUtil.getMessageFromArgs(args);
+
+            StaffChatManager chatman = new StaffChatManager();
+            chatman.sendModMessage("CONSOLE", "CONSOLE", "#", message);
+        }
+    }
+}
