@@ -21,12 +21,13 @@ public class MultiChatExecuteCommand extends Command {
         super("multichatexecute", ConfigManager.getInstance().getHandler("config.yml").getConfig().getChildrenMap().containsKey("multichatexecutecommand") ? ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("multichatexecutecommand").getList(String::valueOf).toArray(new String[0]) : new String[]{"mcexecute", "mce", "gexecute", "gexe", "gcommand"});
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.execute");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.execute")) {
-            return;
-        }
 
         if (args.length < 1) {
 

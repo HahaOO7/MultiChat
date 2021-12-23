@@ -14,18 +14,19 @@ import xyz.olivermartin.multichat.velocity.events.PostBroadcastEvent;
  */
 public class DisplayCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public DisplayCommand() {
         super("display", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.display");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.display")) {
-            return;
-        }
 
         if (args.length < 1) {
 

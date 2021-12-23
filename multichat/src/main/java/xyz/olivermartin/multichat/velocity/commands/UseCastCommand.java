@@ -16,7 +16,7 @@ import xyz.olivermartin.multichat.velocity.MultiChatUtil;
  */
 public class UseCastCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public UseCastCommand() {
         super("usecast", aliases);
@@ -27,13 +27,13 @@ public class UseCastCommand extends Command {
         sender.sendMessage(Component.text("/usecast <name> <message>").color(NamedTextColor.AQUA));
     }
 
-    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.cast.admin");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.cast.admin")) {
-            return;
-        }
 
         if (args.length < 2) {
             displayUsage(sender);
@@ -41,16 +41,10 @@ public class UseCastCommand extends Command {
         }
 
         if (CastControl.existsCast(args[0])) {
-
             String message = MultiChatUtil.getMessageFromArgs(args, 1);
-
             CastControl.sendCast(args[0], message, Channel.getGlobalChannel(), sender);
-
         } else {
-
             MessageManager.sendSpecialMessage(sender, "command_usecast_does_not_exist", args[0].toUpperCase());
-            return;
-
         }
     }
 }

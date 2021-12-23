@@ -13,18 +13,19 @@ import java.util.Optional;
  */
 public class HelpMeCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public HelpMeCommand() {
         super("helpme", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.helpme");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.helpme")) {
-            return;
-        }
 
         if (sender instanceof Player player) {
 

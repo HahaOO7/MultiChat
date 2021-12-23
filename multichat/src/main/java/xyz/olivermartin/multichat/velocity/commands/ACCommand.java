@@ -15,19 +15,19 @@ import xyz.olivermartin.multichat.velocity.StaffChatManager;
  */
 public class ACCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public ACCommand() {
         super("ac", aliases);
     }
 
-    public void execute(Invocation invocation) {
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.admin");
+    }
 
+    public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.admin")) {
-            return;
-        }
 
         boolean toggleresult;
 

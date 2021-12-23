@@ -17,19 +17,17 @@ public class ChannelCommand extends Command {
     }
 
     private void showHelp(CommandSource sender) {
-
         MessageManager.sendMessage(sender, "command_channel_help");
-
     }
 
-    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.channel");
+    }
+
     public void execute(Invocation invocation) {
 
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.channel")) {
-            return;
-        }
 
         if ((sender instanceof Player)) {
             if ((args.length < 1) || ((args.length == 1) && (args[0].toLowerCase().equals("help")))) {

@@ -17,12 +17,13 @@ public class LocalCommand extends Command {
         super("local", ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("localcommand").getList(String::valueOf).toArray(new String[0]));
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.mode");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.mode")) {
-            return;
-        }
 
         if ((sender instanceof Player player)) {
 

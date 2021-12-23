@@ -8,16 +8,16 @@ import xyz.olivermartin.multichat.velocity.MessageManager;
 public class MultiChatBypassCommand extends Command {
 
     public MultiChatBypassCommand() {
-        super("multichatbypass", ConfigManager.getInstance().getHandler("config.yml").getConfig().getChildrenMap().containsKey("multichatbypasscommand") ? (String[]) ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("multichatbypasscommand").getList(String::valueOf).toArray(new String[0]) : new String[0]);
+        super("multichatbypass", ConfigManager.getInstance().getHandler("config.yml").getConfig().getChildrenMap().containsKey("multichatbypasscommand") ? ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("multichatbypasscommand").getList(String::valueOf).toArray(new String[0]) : new String[0]);
     }
 
-    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.bypass");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.bypass")) {
-            return;
-        }
 
         if (!(sender instanceof Player player)) {
             return;

@@ -18,19 +18,20 @@ import java.util.Map;
  */
 public class AnnouncementCommand extends Command {
 
-    private static String[] aliases = new String[]{"announce"};
+    private static final String[] aliases = new String[]{"announce"};
 
     public AnnouncementCommand() {
         super("announcement", aliases);
+    }
+
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.announce");
     }
 
     public void execute(Invocation invocation) {
 
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.announce")) {
-            return;
-        }
 
         if (args.length < 1) {
 

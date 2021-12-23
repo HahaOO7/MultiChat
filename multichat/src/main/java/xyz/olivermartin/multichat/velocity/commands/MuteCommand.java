@@ -12,14 +12,14 @@ public class MuteCommand extends Command {
 		super("multichatmute", ConfigManager.getInstance().getHandler("chatcontrol.yml").getConfig().getNode("mutecommand").getList(String::valueOf).toArray(new String[0]));
 	}
 
-	@Override
+	public boolean hasPermission(Invocation invocation) {
+		return invocation.source().hasPermission("multichat.mute");
+	}
+
 	public void execute(Invocation invocation) {
 		var args = invocation.arguments();
 		var sender = invocation.source();
-		if(!sender.hasPermission("multichat.mute")) {
-			return;
-		}
-		
+
 		if (!ConfigManager.getInstance().getHandler("chatcontrol.yml").getConfig().getNode("mute").getBoolean()) return;
 		
 		if (args.length != 1) {

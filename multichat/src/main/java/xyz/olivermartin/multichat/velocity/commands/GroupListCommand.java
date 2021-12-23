@@ -11,18 +11,18 @@ import xyz.olivermartin.multichat.velocity.MultiChat;
  */
 public class GroupListCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public GroupListCommand() {
         super("groups", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.listgroups");
+    }
+
     public void execute(Invocation invocation) {
-        var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.listgroups")) {
-            return;
-        }
 
         MessageManager.sendMessage(sender, "command_grouplist_list");
 

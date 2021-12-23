@@ -14,18 +14,19 @@ import xyz.olivermartin.multichat.velocity.StaffChatManager;
  */
 public class MCCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public MCCommand() {
         super("mc", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.mod");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.mod")) {
-            return;
-        }
 
         boolean toggleresult;
 

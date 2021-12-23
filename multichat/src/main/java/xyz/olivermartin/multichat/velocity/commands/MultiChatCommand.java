@@ -12,7 +12,7 @@ import xyz.olivermartin.multichat.velocity.*;
  */
 public class MultiChatCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public MultiChatCommand() {
         super("multichat", aliases);
@@ -28,12 +28,13 @@ public class MultiChatCommand extends Command {
 
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.admin");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.admin")) {
-            return;
-        }
 
         if (args.length < 1) {
 

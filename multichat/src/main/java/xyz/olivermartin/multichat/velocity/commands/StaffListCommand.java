@@ -12,18 +12,18 @@ import xyz.olivermartin.multichat.velocity.*;
  */
 public class StaffListCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public StaffListCommand() {
         super("staff", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.list");
+    }
+
     public void execute(Invocation invocation) {
-        var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.list")) {
-            return;
-        }
 
         String server;
         boolean staff = false;

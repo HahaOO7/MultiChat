@@ -9,18 +9,16 @@ public class IgnoreCommand extends Command {
         super("ignore", ConfigManager.getInstance().getHandler("chatcontrol.yml").getConfig().getNode("ignorecommand").getList(String::valueOf).toArray(new String[0]));
     }
 
-    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.ignore");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.ignore")) {
-            return;
-        }
 
         if (args.length != 1) {
-
             MessageManager.sendMessage(sender, "ignore_usage");
-
         } else {
 
             if (sender instanceof Player player) {

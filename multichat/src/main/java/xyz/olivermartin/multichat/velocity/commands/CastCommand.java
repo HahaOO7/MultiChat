@@ -18,7 +18,7 @@ import java.util.Iterator;
  */
 public class CastCommand extends Command {
 
-	private static String[] aliases = new String[] {};
+	private static final String[] aliases = new String[] {};
 
 	public CastCommand() {
 		super("cast",  aliases);
@@ -32,14 +32,14 @@ public class CastCommand extends Command {
 		sender.sendMessage(Component.text("/<castname> <message>").color(NamedTextColor.AQUA));
 	}
 
-	@Override
+	public boolean hasPermission(Invocation invocation) {
+		return invocation.source().hasPermission("multichat.cast.admin");
+	}
+
 	public void execute(Invocation invocation) {
 
 		var args = invocation.arguments();
 		var sender = invocation.source();
-		if(!sender.hasPermission("multichat.cast.admin")) {
-			return;
-		}
 
 		if (args.length < 1) {
 

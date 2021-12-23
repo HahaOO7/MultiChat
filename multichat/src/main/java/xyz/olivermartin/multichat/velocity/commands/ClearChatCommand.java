@@ -16,23 +16,20 @@ import xyz.olivermartin.multichat.velocity.MultiChat;
  */
 public class ClearChatCommand extends Command {
 
-	private static String[] aliases = new String[] {"chatclear","wipechat","killchat"};
+	private static final String[] aliases = new String[] {"chatclear","wipechat","killchat"};
 
 	public ClearChatCommand() {
 		super("clearchat",  aliases);
 	}
 
 	private void clearChatSelf(CommandSource sender) {
-
 		for (int i = 1 ; i<151 ; i++ ) {
 			sender.sendMessage(Component.empty());
 		}
 		MessageManager.sendMessage(sender, "command_clearchat_self");
-
 	}
 
 	private void clearChatServer(CommandSource sender) {
-
 		for (Player onlineplayer : MultiChat.getInstance().getServer().getAllPlayers()) {
 			if (onlineplayer.getCurrentServer().get().getServerInfo().getName().equals(((Player) sender).getCurrentServer().get().getServerInfo().getName() )) {
 				for (int i = 1 ; i<151 ; i++ ) {
@@ -41,7 +38,6 @@ public class ClearChatCommand extends Command {
 				MessageManager.sendMessage(onlineplayer, "command_clearchat_server");
 			}
 		}
-
 	}
 
 	private void clearChatGlobal() {
@@ -66,12 +62,13 @@ public class ClearChatCommand extends Command {
 		}
 	}
 
+	public boolean hasPermission(Invocation invocation) {
+		return invocation.source().hasPermission("multichat.chat.clear");
+	}
+
 	public void execute(Invocation invocation) {
 		var args = invocation.arguments();
 		var sender = invocation.source();
-		if(!sender.hasPermission("multichat.chat.clear")) {
-			return;
-		}
 
 		if (args.length < 1) {
 

@@ -18,18 +18,19 @@ import java.util.UUID;
  */
 public class GroupCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public GroupCommand() {
         super("group", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.group");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.group")) {
-            return;
-        }
 
         if ((args.length < 1) || ((args.length == 1) && (args[0].equalsIgnoreCase("help")))) {
 

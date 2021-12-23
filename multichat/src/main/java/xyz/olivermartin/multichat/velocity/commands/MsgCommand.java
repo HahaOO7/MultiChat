@@ -15,15 +15,16 @@ import java.util.Optional;
 public class MsgCommand extends Command {
 
     public MsgCommand() {
-        super("msg", (String[]) ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("msgcommand").getList(String::valueOf).toArray(new String[0]));
+        super("msg", ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("msgcommand").getList(String::valueOf).toArray(new String[0]));
+    }
+
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.msg");
     }
 
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.msg")) {
-            return;
-        }
 
         if (args.length < 1) {
 
@@ -109,8 +110,6 @@ public class MsgCommand extends Command {
                 if (MultiChat.getInstance().getServer().getPlayer(args[0]).orElse(null) != null) {
 
                     Player target = MultiChat.getInstance().getServer().getPlayer(args[0]).orElse(null);
-
-                    boolean permittedToMessage = true;
 
                     if (ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("fetch_spigot_display_names").getBoolean()) {
 

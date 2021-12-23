@@ -18,12 +18,13 @@ public class ReplyCommand extends Command {
         super("r", ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("rcommand").getList(String::valueOf).toArray(new String[0]));
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.msg");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.msg")) {
-            return;
-        }
 
         if (args.length < 1) {
 

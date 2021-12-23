@@ -17,20 +17,20 @@ import java.util.Iterator;
  */
 public class BulletinCommand extends Command {
 
-    private static String[] aliases = new String[]{"bulletins"};
+    private static final String[] aliases = new String[]{"bulletins"};
 
     public BulletinCommand() {
         super("bulletin", aliases);
     }
 
-    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.bulletin");
+    }
+
     public void execute(Invocation invocation) {
 
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.bulletin")) {
-            return;
-        }
 
         if (args.length < 1) {
 

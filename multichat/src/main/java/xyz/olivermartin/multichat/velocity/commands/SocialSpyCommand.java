@@ -17,12 +17,13 @@ public class SocialSpyCommand extends Command {
         super("socialspy", ConfigManager.getInstance().getHandler("config.yml").getConfig().getNode("socialspycommand").getList(String::valueOf).toArray(new String[0]));
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.staff.spy");
+    }
+
     public void execute(Invocation invocation) {
         var args = invocation.arguments();
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.staff.spy")) {
-            return;
-        }
 
         if ((sender instanceof Player)) {
 

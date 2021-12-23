@@ -12,17 +12,18 @@ import xyz.olivermartin.multichat.velocity.MultiChat;
  */
 public class FreezeChatCommand extends Command {
 
-    private static String[] aliases = new String[]{};
+    private static final String[] aliases = new String[]{};
 
     public FreezeChatCommand() {
         super("freezechat", aliases);
     }
 
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("multichat.chat.freeze");
+    }
+
     public void execute(Invocation invocation) {
         var sender = invocation.source();
-        if (!sender.hasPermission("multichat.chat.freeze")) {
-            return;
-        }
 
         if (MultiChat.frozen) {
 
